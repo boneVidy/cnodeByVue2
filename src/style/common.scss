@@ -1,0 +1,17 @@
+*{
+  margin:0;
+  padding: 0
+}
+$basePadding: 15px;
+@mixin absoluteContainer () {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.container {
+  @include absoluteContainer();
+  box-sizing: border-box;
+  padding: 15px;
+}
