@@ -1,7 +1,14 @@
 <template>
     <div>
         <header-bar :menu-btn-click="showMenu"></header-bar>
-        <div class="has-header">home</div>
+        <div class="container has-header">
+          <ul>
+            <li class="news-item" v-for="news in list">
+              <h4 class="title">{{news.title}}</h4>
+              <div class="avatar-box"></div>
+            </li>
+          </ul>
+        </div>
         <menu-box v-on:hideMenu="whenMenuHide" :is-show="isMenuShow">
             <div class="item">全部</div>
             <div class="item">精华</div>
@@ -15,15 +22,21 @@
 </template>
 
 <style lang="scss" scoped>
-    
-    .has-header { 
-        margin-top: 44px;
-        
-    }
     .item {
             line-height: 44px;
      }
-    
+     .news-item {
+       padding: 10px 15px;
+       font-size:15px;
+       border-bottom: 1px solid #ccc;
+       overflow: hidden;
+       .title{
+         color: #333
+       }
+     }
+     .avatar-box {
+
+     }
 </style>
 <script>
     import HeaderBar from 'component/Header.vue'
@@ -39,7 +52,11 @@
 
       },
       created () {
-        console.log(this.$http)
+        console.log(this._http)
+        this._http.get('topics').then(res => {
+          console.log(res)
+          this.list = res
+        })
       },
       methods: {
         showMenu () {

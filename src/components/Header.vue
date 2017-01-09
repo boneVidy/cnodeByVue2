@@ -28,7 +28,9 @@
       left:0;
       right:0;
       top:0;
+      background:#fff;
       box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      z-index: 13;
       @include setBarHeight($barHeight);
       .menu-btn {
         position: absolute;

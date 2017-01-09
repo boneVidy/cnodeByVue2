@@ -34,7 +34,7 @@
 <style lang="scss" scoped>
   // @import './src/style/common.scss'
   @mixin setPos () {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
@@ -47,6 +47,7 @@
     background: #fff;
     text-align: center;
     color: #333;
+    z-index:14;
     &.show{
       transform: translate3d(0,0, 0);
     }

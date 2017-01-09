@@ -3,6 +3,9 @@
   padding: 0
 }
 $basePadding: 15px;
+.padding{
+  padding: basePadding
+}
 @mixin absoluteContainer () {
   position: absolute;
   left: 0;
@@ -13,5 +16,9 @@ $basePadding: 15px;
 .container {
   @include absoluteContainer();
   box-sizing: border-box;
-  padding: 15px;
+  -webkit-overflow-scrolling: touch;
+  //padding: 15px;
+}
+.container.has-header{
+  top: 44px;
 }
