@@ -6,8 +6,7 @@ import VueResource from 'vue-resource'
 import httpPlg from 'PLUGINS/http.js'
 import App from './App'
 import routes from 'ROUTERS/mainRouter.js'
-console.log(httpPlg)
-// console.log(routers)
+
 /* eslint-disable no-new */
 const plugins = [VueRouter, VueResource, httpPlg]
 plugins.map(plg => Vue.use(plg))
@@ -19,7 +18,7 @@ router.beforeEach(function (to, from, next) {
   console.log(to, from)
   next()
 })
-console.log(App)
+
 new Vue({
   router: router,
   render: h => h(App)

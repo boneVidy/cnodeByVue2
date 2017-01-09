@@ -1,14 +1,14 @@
 <template>
     <div>
         <header-bar :menu-btn-click="showMenu"></header-bar>
-        <div class="container has-header">
+        <scroller :can-refresh="canRefresh" class="container has-header" v-on:scrolling="onscroll">
           <ul>
             <li class="news-item" v-for="news in list">
               <h4 class="title">{{news.title}}</h4>
               <div class="avatar-box"></div>
             </li>
           </ul>
-        </div>
+        </scroller>
         <menu-box v-on:hideMenu="whenMenuHide" :is-show="isMenuShow">
             <div class="item">全部</div>
             <div class="item">精华</div>
@@ -41,21 +41,23 @@
 <script>
     import HeaderBar from 'component/Header.vue'
     import MenuBox from 'component/MenuBox.vue'
+    import Scroller from 'component/Scroller.vue'
+    
     export default {
       data () {
         return {
           isMenuShow: false,
-          list: []
+          list: [],
+          canRefresh: false
         }
       },
       mouted () {
 
       },
       created () {
-        console.log(this._http)
         this._http.get('topics').then(res => {
-          console.log(res)
           this.list = res
+          this.canRefresh = true
         })
       },
       methods: {
@@ -64,11 +66,15 @@
         },
         whenMenuHide () {
           this.isMenuShow = false
+        },
+        onscroll (ev) {
+          console.log(ev)
         }
       },
       components: {
         HeaderBar,
-        MenuBox
+        MenuBox,
+        Scroller
       }
     }
 </script>
