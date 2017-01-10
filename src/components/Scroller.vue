@@ -1,28 +1,46 @@
 <template>
-    <div   >
+    <div >
         <div class="container" v-bind:id="scrollId">
-          <slot></slot>
+          <div class="scroll-container">
+            <div class="xs-container">
+              <slot></slot>
+            </div>
+          </div>
         </div>
         
       </div>
 </template>
 <script>
-    import JRoll from 'assets/lib/JRoll.js'
+    // import JRoll from 'assets/lib/JRoll.js'
+    // import IScroll from 'iscroll'
+    import XScroll from 'xscroll'
+    
     export default {
       data () {
         return {
-          scrollId: `scrollerId${Date.now()}`,
-          scroller: null
+          scrollId: `scrollId${Date.now()}${Math.floor(Math.random() * 100)}`
         }
       },
       props: {
-        menuBtnClick: {
-          type: Function,
-          default: function () {}
+        lockX: {
+          type: Boolean,
+          default: true
         },
-        canRefresh: {
+        lockY: {
           type: Boolean,
           default: false
+        },
+        scrollbarX: {
+          type: Boolean,
+          default: true
+        },
+        scrollbarY: {
+          type: Boolean,
+          default: true
+        },
+        bounce: {
+          type: Boolean,
+          default: true
         }
       },
       computed: {
@@ -43,15 +61,33 @@
         }
       },
       mounted () {
-        let self = this
-        setTimeout(function () {
-          self.scroller = new JRoll(`#${self.scrollId}`)
-          // this.scroller.options.bounce = false
-          self.scroller.on('scroll', function () {
-            // console.log(this)
-            self.$emit('scrolling', this)
-          })
-        }, 300)
+        let content = this.$el.querySelector('.scroll-container')
+        console.log(content)
+        let scroller = new XScroll({
+          renderTo: `#${this.scrollId}`,
+          lockX: this.lockX,
+          lockY: this.lockY,
+          scrollbarX: this.scrollbarX,
+          scrollbarY: this.scrollbarY,
+          content: content,
+          bounce: this.bounce,
+          // useOriginScroll: this.useOriginScroll,
+          useTransition: true,
+          preventDefault: true,
+          // boundryCheck: this.boundryCheck,
+          gpuAcceleration: true,
+          stopPropagation: false
+        })
+        scroller.render()
+        // this.scroller.options.bounce = false
+        // scroller.on('scroll', function () {
+        //   console.log(this)
+        //   self.$emit('scrolling', this)
+        // })
+        // scroller.on('scrollEnd', function () {
+        //   console.log(this)
+        //   self.$emit('scrolling', this)
+        // })
       },
       created () {
       },

@@ -1,0 +1,19 @@
+@mixin absoluteContainer () {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+@mixin setShadow () {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+@mixin box-sizing ($sizing:border-box) {
+    -webkit-box-sizing:$sizing;     
+       -moz-box-sizing:$sizing;
+            box-sizing:$sizing;
+}
+
+@mixin border ($direction) {
+  border-#{$direction}:1px solid $baseColor;
+}

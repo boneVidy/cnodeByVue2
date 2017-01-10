@@ -1,24 +1,64 @@
-*{
-  margin:0;
-  padding: 0
+@import './reset.scss';
+@import './mixin.scss';
+@import './var.scss';
+.ofh{
+  overflow: hidden
 }
-$basePadding: 15px;
+.fl {
+  float: left
+}
+.fr{
+  float: right;
+}
+.blk{
+  display: block;
+}
+.circle{
+  border-radius: 50%;
+}
 .padding{
-  padding: basePadding
+  padding: $basePadding
 }
-@mixin absoluteContainer () {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+.cf{
+  clear: both;
+}
+.margin-bottom-far{
+  margin-bottom: 15px;
+}
+.margin-bottom-close{
+  margin-bottom: 10px;
 }
 .container {
   @include absoluteContainer();
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
-  //padding: 15px;
 }
 .container.has-header{
   top: 44px;
+}
+
+.card {
+  @extend .blk;
+  @extend .padding;
+  @extend .ofh;
+  @include setShadow();
+  @include box-sizing;
+  font-size: $baseFontSize;
+}
+
+.avatar{
+  width: 50px;
+  height: 50px;
+  @extend .circle;
+  background: #ccc;
+}
+
+.list {
+  .list-title {
+    @extend .ofh;
+    padding: 0 $basePadding;
+    min-height: 48px;
+    line-height: 48px;
+    @include box-sizing;
+  }
 }
