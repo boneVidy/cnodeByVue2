@@ -1,7 +1,7 @@
 <template>
     <div>
         <header-bar :menu-btn-click="showMenu"></header-bar>
-        <scroller :can-refresh="canRefresh" class="container has-header" v-on:scrolling="onscroll">
+        <scroller v-on:pullup="load" class="container has-header" v-on:scrolling="onscroll">
           <ul>
             <li class="news-item" v-for="news in list">
               <h4 class="title">{{news.title}}</h4>
@@ -42,25 +42,27 @@
     import HeaderBar from 'component/Header.vue'
     import MenuBox from 'component/MenuBox.vue'
     import Scroller from 'component/Scroller.vue'
-    
+    import evBus from '../service/service.js'
     export default {
       data () {
         return {
           isMenuShow: false,
-          list: [],
-          canRefresh: false
+          list: []
         }
       },
-      mouted () {
-
+      mounted () {
+        this.load()
       },
       created () {
-        this._http.get('topics').then(res => {
-          this.list = res
-          this.canRefresh = true
-        })
       },
       methods: {
+        load () {
+          // debugger
+          this._http.get('topics').then(res => {
+            this.list = this.list.concat(res)
+            evBus.$emit('refresh')
+          })
+        },
         showMenu () {
           this.isMenuShow = true
         },

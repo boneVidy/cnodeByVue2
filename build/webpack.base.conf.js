@@ -30,7 +30,8 @@ module.exports = {
       'PAGES':path.resolve(__dirname,'../src/pages'),
       'ROUTERS':path.resolve(__dirname,'../src/routers'),
       'STYLE': path.resolve(__dirname, '../src/style'),
-      'PLUGINS': path.resolve(__dirname, '../src/plugins')
+      'PLUGINS': path.resolve(__dirname, '../src/plugins'),
+      'LIB': path.resolve(__dirname, '../src/lib')
     }
   },
   resolveLoader: {
@@ -50,7 +51,13 @@ module.exports = {
         test: /\.js$/,
         loader: 'eslint',
         include: [
-          path.join(projectRoot, 'src')
+          path.join(projectRoot, 'src/assets'),
+          path.join(projectRoot, 'src/pages'),
+          path.join(projectRoot, 'src/plugins'),
+          path.join(projectRoot, 'src/routers'),
+          path.join(projectRoot, 'src/service'),
+          path.join(projectRoot, 'src/config.js'),
+          path.join(projectRoot, 'src/main.js')
         ],
         exclude: /node_modules/
       }

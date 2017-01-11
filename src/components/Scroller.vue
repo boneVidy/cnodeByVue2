@@ -11,10 +11,21 @@
       </div>
 </template>
 <script>
-    // import JRoll from 'assets/lib/JRoll.js'
-    // import IScroll from 'iscroll'
-    import XScroll from 'xscroll'
-    
+    import XScroll from 'LIB/xscroll/xscroll.js'
+    // import Infinite from 'LIB/xscroll/plugins/infinite.js'
+    import PullUp from 'LIB/xscroll/plugins/pullup.js'
+    import evBus from '../service/service.js'
+    const pullupDefaultConfig = () => ({
+      content: 'Pull Up To Refresh',
+      pullUpHeight: 60,
+      height: 40,
+      autoRefresh: false,
+      downContent: '<strong>下拉刷新</strong>',
+      upContent: '上拉刷新',
+      loadingContent: 'Loading...',
+      clsPrefix: 'xs-plugin-pullup-'
+    })
+
     export default {
       data () {
         return {
@@ -43,21 +54,8 @@
           default: true
         }
       },
-      computed: {
-        needRefresh () {
-          if (!this.canRefresh) {
-            return false
-          }
-          if (this.scroller) {
-            this.refresh()
-            return true
-          }
-        }
-      },
       methods: {
         refresh () {
-          this.scroller.refresh()
-          this.canRefresh = false
         }
       },
       mounted () {
@@ -78,16 +76,21 @@
           gpuAcceleration: true,
           stopPropagation: false
         })
+        let pullup = new PullUp(pullupDefaultConfig())
+        pullup.on('loading', (e) => {
+          this.$emit('pullup')
+        })
+        let refresh = () => {
+          setTimeout(() => {
+            scroller.resetSize()
+            pullup.complete()
+          })
+        }
+        evBus.$on('refresh', () => {
+          refresh()
+        })
+        scroller.plug(pullup)
         scroller.render()
-        // this.scroller.options.bounce = false
-        // scroller.on('scroll', function () {
-        //   console.log(this)
-        //   self.$emit('scrolling', this)
-        // })
-        // scroller.on('scrollEnd', function () {
-        //   console.log(this)
-        //   self.$emit('scrolling', this)
-        // })
       },
       created () {
       },
