@@ -19,12 +19,12 @@ function getRequestUrl (URL, api) {
 }
 function getHttpMethod (obj) {
   return {
-    get: function (api, options, isShowLoading) {
+    get: function (api, params, isShowLoading) {
       if (!api) {
         return Promise.reject('this is empty url')
       }
       if (obj) {
-        return obj.$http.get(getRequestUrl(URL, api), options)
+        return obj.$http.get(getRequestUrl(URL, api), {params})
                   .then(
                     (resp) => {
                       if (!resp.data.success) {
@@ -41,7 +41,7 @@ function getHttpMethod (obj) {
                   }).finally(function () {
                   })
       } else {
-        return VueObj.http.get(getRequestUrl(URL, api), options)
+        return VueObj.http.get(getRequestUrl(URL, api), params)
       }
     },
     post: function (api, options, isShowLoading) {

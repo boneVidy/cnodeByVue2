@@ -31,7 +31,8 @@ module.exports = {
       'ROUTERS':path.resolve(__dirname,'../src/routers'),
       'STYLE': path.resolve(__dirname, '../src/style'),
       'PLUGINS': path.resolve(__dirname, '../src/plugins'),
-      'LIB': path.resolve(__dirname, '../src/lib')
+      'LIB': path.resolve(__dirname, '../src/lib'),
+      'TOOL': path.resolve(__dirname, '../src/tool')
     }
   },
   resolveLoader: {

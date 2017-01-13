@@ -1,11 +1,28 @@
 <template>
     <div>
         <header-bar :menu-btn-click="showMenu"></header-bar>
-        <scroller v-on:pullup="load" class="container has-header" v-on:scrolling="onscroll">
-          <ul>
-            <li class="news-item" v-for="news in list">
-              <h4 class="title">{{news.title}}</h4>
-              <div class="avatar-box"></div>
+        <scroller v-on:pullup="load(params)" class="container has-header" v-on:scrolling="onscroll">
+          <ul class="list">
+            <li class="item" v-for="item in list">
+              <h3 class="margin-bottom-close"
+                  v-bind:title="getBadge(item.tab, item.good, item.top, false)"
+                  :class="getBadge(item.tab, item.good, item.top, true)"
+                  >
+                  {{item.title}}
+              </h3>
+              <div class="rows">
+                <img :src="item.author.avatar_url" class="avatar-min">
+                <div class="info">
+                  <p class="rows">
+                    <span class="username">
+                      {{item.author.loginname}}
+                    </span>
+                    <span>
+                      <strong>{{item.reply_count}}</strong> /{{item.visit_count}}
+                      </span>
+                  </p>
+                </div>
+              </div>
             </li>
           </ul>
         </scroller>
@@ -22,20 +39,28 @@
 </template>
 
 <style lang="scss" scoped>
-    .item {
-            line-height: 44px;
-     }
-     .news-item {
-       padding: 10px 15px;
-       font-size:15px;
-       border-bottom: 1px solid #ccc;
-       overflow: hidden;
-       .title{
-         color: #333
+      @import '~STYLE/mixin.scss';
+      @mixin fullflexwidth () {
+        display: block;
+         width: 100%;
+         flex: 1;
+      }
+     .item{
+       .avatar-min {
+         display: block;
+         @include marginClose(right);
        }
-     }
-     .avatar-box {
-
+       .info {
+         @include fullflexwidth();
+         @include box-sizing();
+         strong{
+           color: #e74c3c;
+         }
+       }
+       .username{
+         @include box-sizing();
+         @include fullflexwidth();
+       }
      }
 </style>
 <script>
@@ -43,25 +68,37 @@
     import MenuBox from 'component/MenuBox.vue'
     import Scroller from 'component/Scroller.vue'
     import evBus from '../service/service.js'
+    import {getTabInfo} from 'TOOL/util.js'
+    console.log(getTabInfo)
     export default {
       data () {
         return {
           isMenuShow: false,
-          list: []
+          list: [],
+          params: {
+            page: 1,
+            limit: 10,
+            tab: '',
+            mdrender: 'false'
+          }
         }
       },
       mounted () {
-        this.load()
+        this.load(this.params)
       },
       created () {
       },
       methods: {
-        load () {
+        load (param) {
           // debugger
-          this._http.get('topics').then(res => {
+          this._http.get('topics', param).then(res => {
             this.list = this.list.concat(res)
+            this.params.page++
             evBus.$emit('refresh')
           })
+        },
+        getBadge (tab, good, top, isClass) {
+          return getTabInfo(tab, good, top, isClass)
         },
         showMenu () {
           this.isMenuShow = true

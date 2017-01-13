@@ -1,3 +1,4 @@
+@import '~STYLE/var.scss';
 @mixin absoluteContainer () {
   position: absolute;
   left: 0;
@@ -16,4 +17,30 @@
 
 @mixin border ($direction) {
   border-#{$direction}:1px solid $baseColor;
+}
+
+@mixin badge () {
+    padding: 5px 6px;
+    font-size: 10px;
+    font-weight: 400;
+    border-radius: 4px;
+    background-color: #e7e7e7;
+    text-align: center;
+    vertical-align: middle;
+}
+
+@mixin ellipsis ($lines:1) {
+  white-space: nowrap;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  // display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  // -webkit-box-orient: vertical;
+}
+
+@mixin marginFar ($dir) {
+  margin-#{$dir}: $farMargin;
+}
+@mixin marginClose ($dir) {
+  margin-#{$dir}: $closeMargin;
 }

@@ -23,10 +23,10 @@
   clear: both;
 }
 .margin-bottom-far{
-  margin-bottom: 15px;
+  margin-bottom: $farMargin;
 }
 .margin-bottom-close{
-  margin-bottom: 10px;
+  margin-bottom: $closeMargin;
 }
 .container {
   @include absoluteContainer();
@@ -52,7 +52,14 @@
   @extend .circle;
   background: #ccc;
 }
-
+.avatar-min{
+  @extend .avatar;
+  width: 40px;
+  height: 40px;
+}
+.rows {
+  display: flex;
+}
 .list {
   .list-title {
     @extend .ofh;
@@ -60,5 +67,42 @@
     min-height: 48px;
     line-height: 48px;
     @include box-sizing;
+  }
+  .item {
+    padding: 10px;
+    @include border(bottom);
+    h3{
+      color: $titleColor;
+      font-size: 16px;
+      line-height: 1.5;
+      @include ellipsis();
+      &:before {
+        content: attr(title);
+        @include badge();
+        color: #fff;
+      }
+      &.default:before{
+        color: $baseColor;
+      }
+      &.top:before{
+        background: #e74c3c;
+        
+      }
+      &.ask:before{
+        background: #3498db;
+        
+      }
+      &.good:before{
+        background: #80bd01;
+        
+      }
+      &.share:before{
+        background: #f3bc40;
+        
+      }
+      &.job:before{
+        background: #9b59b6;
+      }
+    }
   }
 }
