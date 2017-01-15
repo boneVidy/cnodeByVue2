@@ -32,7 +32,8 @@ module.exports = {
       'STYLE': path.resolve(__dirname, '../src/style'),
       'PLUGINS': path.resolve(__dirname, '../src/plugins'),
       'LIB': path.resolve(__dirname, '../src/lib'),
-      'TOOL': path.resolve(__dirname, '../src/tool')
+      'TOOL': path.resolve(__dirname, '../src/tool'),
+      'FILTER': path.resolve(__dirname, '../src/filters')
     }
   },
   resolveLoader: {

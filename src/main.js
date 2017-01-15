@@ -6,6 +6,7 @@ import VueResource from 'vue-resource'
 import httpPlg from 'PLUGINS/http.js'
 import App from './App'
 import routes from 'ROUTERS/mainRouter.js'
+import setFilter from 'FILTER/filters.js'
 
 /* eslint-disable no-new */
 const plugins = [VueRouter, VueResource, httpPlg]
@@ -13,6 +14,7 @@ plugins.map(plg => Vue.use(plg))
 const router = new VueRouter({
   routes: routes
 })
+setFilter(Vue)
 
 router.beforeEach(function (to, from, next) {
   console.log(to, from)

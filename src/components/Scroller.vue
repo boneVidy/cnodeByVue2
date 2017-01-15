@@ -17,18 +17,19 @@
     import evBus from '../service/service.js'
     const pullupDefaultConfig = () => ({
       content: 'Pull Up To Refresh',
-      pullUpHeight: 60,
+      pullUpHeight: 200,
       height: 40,
       autoRefresh: false,
       downContent: '<strong>下拉刷新</strong>',
       upContent: '上拉刷新',
-      loadingContent: 'Loading...',
+      loadingContent: '加载中',
       clsPrefix: 'xs-plugin-pullup-'
     })
 
     export default {
       data () {
         return {
+          scroller: null,
           scrollId: `scrollId${Date.now()}${Math.floor(Math.random() * 100)}`
         }
       },
@@ -43,7 +44,7 @@
         },
         scrollbarX: {
           type: Boolean,
-          default: true
+          default: false
         },
         scrollbarY: {
           type: Boolean,
@@ -61,7 +62,7 @@
       mounted () {
         let content = this.$el.querySelector('.scroll-container')
         console.log(content)
-        let scroller = new XScroll({
+        this.scroller = new XScroll({
           renderTo: `#${this.scrollId}`,
           lockX: this.lockX,
           lockY: this.lockY,
@@ -76,21 +77,22 @@
           gpuAcceleration: true,
           stopPropagation: false
         })
+        this.$parent.scroller = this.scroller
         let pullup = new PullUp(pullupDefaultConfig())
         pullup.on('loading', (e) => {
           this.$emit('pullup')
         })
         let refresh = () => {
           setTimeout(() => {
-            scroller.resetSize()
+            this.scroller.resetSize()
             pullup.complete()
           })
         }
         evBus.$on('refresh', () => {
           refresh()
         })
-        scroller.plug(pullup)
-        scroller.render()
+        this.scroller.plug(pullup)
+        this.scroller.render()
       },
       created () {
       },
@@ -101,7 +103,10 @@
       }
     }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+    .xs-plugin-pullup-up {
+      text-align: center;
+    }  
     
     
     
